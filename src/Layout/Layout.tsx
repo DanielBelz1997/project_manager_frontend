@@ -10,6 +10,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Header />
       <Separator />
       <main className="overflow-y-auto h-[88vh]">{children}</main>
+      <Separator />
       <Footer />
     </div>
   );

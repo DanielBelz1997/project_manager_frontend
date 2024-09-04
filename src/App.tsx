@@ -6,11 +6,11 @@ const router = createBrowserRouter(PAGES);
 
 function App() {
   return (
-    <>
+    <div className="font-Heebo">
       <Layout>
         <RouterProvider router={router} />
       </Layout>
-    </>
+    </div>
   );
 }
 

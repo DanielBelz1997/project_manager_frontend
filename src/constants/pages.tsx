@@ -1,8 +1,10 @@
+import Home from "@/pages/Home/Home";
+
 export const PAGES = [
   {
     name: "Home",
     path: "/",
-    element: <>hello Home</>,
+    element: <Home />,
   },
   {
     name: "another",
