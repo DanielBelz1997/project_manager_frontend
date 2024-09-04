@@ -1,18 +1,8 @@
-import { Router } from "react-router-dom";
-import "./App.css";
-import Layout from "./components/Layout/Layout";
+import { PAGES } from "./constants/pages";
+import Layout from "./Layout/Layout";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <div>Hello world!</div>,
-  },
-  {
-    path: "/another",
-    element: <div>another</div>,
-  },
-]);
+const router = createBrowserRouter(PAGES);
 
 function App() {
   return (
