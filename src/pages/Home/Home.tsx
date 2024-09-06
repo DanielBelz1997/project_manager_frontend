@@ -12,6 +12,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
 import { TypographyP } from "@/components/ui/typography";
+import { Button } from "@/components/ui/button";
 // import { TypographyP } from "@/components/ui/typography";
 
 export default function Home() {
@@ -53,7 +54,8 @@ export default function Home() {
                 <div className="p-1">
                   <Card>
                     <CardContent className="flex aspect-square items-center justify-center p-8">
-                      <TypographyP className="flex justify-center w-56 text-right leading-5">
+                      <Button className="m-5">בקשה חדשה</Button>
+                      <TypographyP className="flex justify-center w-56 text-center leading-5">
                         אנחנו צוות שיוצר תוכן, כל פעם יהיה כאן משהו אחר. אני
                         מאוד אוהב את אנחנו צוות שיוצר תוכן, כל פעם יהיה כאן משהו
                         אחר. אני מאוד אוהב את אנחנו צוות שיוצר תוכן, כל פעם יהיה
