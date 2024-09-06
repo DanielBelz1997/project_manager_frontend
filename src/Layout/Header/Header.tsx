@@ -29,9 +29,11 @@ export function Header() {
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>צור קשר</DialogTitle>
+              <DialogTitle className="flex justify-end m-5">
+                צור קשר
+              </DialogTitle>
               <DialogDescription>
-                Anyone who has this link will be able to view this.
+                יש לכם משהו לומר לנו? אנא צרו איתנו קשר ונחזור אליכם בהקדם!
               </DialogDescription>
             </DialogHeader>
             <div className="flex items-center space-x-2">
@@ -49,7 +51,7 @@ export function Header() {
             <DialogFooter className="sm:justify-start">
               <DialogClose asChild>
                 <Button type="button" variant="secondary">
-                  Close
+                  סגור
                 </Button>
               </DialogClose>
             </DialogFooter>
