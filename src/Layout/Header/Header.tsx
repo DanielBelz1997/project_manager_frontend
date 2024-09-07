@@ -2,6 +2,7 @@ import { ModeToggle } from "../../components/theme/mode_toggle";
 import app_logo from "../../assets/services/app_logo.png";
 import { Button } from "@/components/ui/button";
 import { TypographyP } from "@/components/ui/typography";
+import { formSchema } from "@/schemas/form-schema";
 
 import {
   Dialog,
@@ -13,10 +14,37 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
 export function Header() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "belzdaniel6@gmail.com",
+      title: "daniel",
+      body: "daniel",
+    },
+  });
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+  };
+
   return (
     <header className="w-full h-[8vh] flex justify-between p-5 items-center">
       <div className="flex justify-start">
@@ -29,24 +57,54 @@ export function Header() {
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle className="flex justify-end m-5">
+              <DialogTitle className="flex justify-end mt-5">
                 צור קשר
               </DialogTitle>
-              <DialogDescription>
-                יש לכם משהו לומר לנו? אנא צרו איתנו קשר ונחזור אליכם בהקדם!
+              <DialogDescription className="text-right pt-1">
+                !יש לכם משהו לומר לנו? אנא צרו איתנו קשר ונחזור אליכם בהקדם
               </DialogDescription>
             </DialogHeader>
-            <div className="flex items-center space-x-2">
-              <div className="grid flex-1 gap-2">
-                <Label htmlFor="link" className="sr-only">
-                  Link
-                </Label>
-                <Input
-                  id="link"
-                  defaultValue="https://ui.shadcn.com/docs/installation"
-                  readOnly
-                />
-              </div>
+            <div>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="grid grid-cols-2 gap-8 text-right">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>שם</FormLabel>
+                        <FormControl>
+                          <Input
+                            className="text-right"
+                            placeholder="name"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription className="text-right">
+                          .זה השם שיוצג אצלינו במערכת
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>דואר אלקטרוני</FormLabel>
+                        <FormControl>
+                          <Input placeholder="email" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit">Submit</Button>
+                </form>
+              </Form>
             </div>
             <DialogFooter className="sm:justify-start">
               <DialogClose asChild>
@@ -54,6 +112,7 @@ export function Header() {
                   סגור
                 </Button>
               </DialogClose>
+              <Button variant="default">שלח</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
