@@ -6,7 +6,6 @@ import { formSchema } from "@/schemas/form-schema";
 
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -102,18 +101,16 @@ export function Header() {
                       </FormItem>
                     )}
                   />
-                  <Button type="submit">Submit</Button>
+                  <Button type="submit">שלח</Button>
+                  {/* <DialogClose asChild>
+                    <Button type="button" variant="secondary">
+                      סגור
+                    </Button>
+                  </DialogClose> */}
                 </form>
               </Form>
             </div>
-            <DialogFooter className="sm:justify-start">
-              <DialogClose asChild>
-                <Button type="button" variant="secondary">
-                  סגור
-                </Button>
-              </DialogClose>
-              <Button variant="default">שלח</Button>
-            </DialogFooter>
+            <DialogFooter className="sm:justify-start"></DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
