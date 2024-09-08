@@ -34,7 +34,11 @@ export default function Home() {
   }, [api]);
 
   return (
-    <div className="w-full h-full p-12 flex justify-around -space-x-36 items-center">
+    <div className="w-full h-full p-40 flex justify-around items-center">
+      <div>
+        <img className="w-40" src={app_logo} />
+        <span className="flex justify-center">כל הבקשות שלכם, במקום אחד.</span>
+      </div>
       <div className="w-96">
         <Carousel
           plugins={[
@@ -45,6 +49,7 @@ export default function Home() {
           opts={{
             align: "start",
             loop: true,
+            direction: "rtl",
           }}
           className="w-full max-w-full"
           setApi={setApi}>
@@ -54,13 +59,13 @@ export default function Home() {
                 <div className="p-1">
                   <Card>
                     <CardContent className="flex aspect-square items-center justify-center p-8">
-                      <Button className="m-5">בקשה חדשה</Button>
                       <TypographyP className="flex justify-center w-56 text-center leading-5">
                         אנחנו צוות שיוצר תוכן, כל פעם יהיה כאן משהו אחר. אני
                         מאוד אוהב את אנחנו צוות שיוצר תוכן, כל פעם יהיה כאן משהו
                         אחר. אני מאוד אוהב את אנחנו צוות שיוצר תוכן, כל פעם יהיה
                         כאן משהו אחר. אני מאוד אוהב את התוכן כאן
                       </TypographyP>
+                      <Button className="m-5">בקשה חדשה</Button>
                     </CardContent>
                   </Card>
                 </div>
@@ -71,12 +76,8 @@ export default function Home() {
           <CarouselNext />
         </Carousel>
         <div className="py-2 text-center text-sm text-muted-foreground">
-          {current} of {count}
+          {current} מתוך {count}
         </div>
-      </div>
-      <div>
-        <img className="w-48" src={app_logo} />
-        <span className="flex justify-center">.כל הבקשות שלכם, במקום אחד</span>
       </div>
     </div>
   );

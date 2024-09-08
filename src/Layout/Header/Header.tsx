@@ -1,11 +1,13 @@
 import { ModeToggle } from "../../components/theme/mode_toggle";
 import app_logo from "../../assets/services/app_logo.png";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { TypographyP } from "@/components/ui/typography";
 import { formSchema } from "@/schemas/form-schema";
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -14,13 +16,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "@/hooks/use-toast";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -33,13 +35,18 @@ export function Header() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      email: "belzdaniel6@gmail.com",
-      title: "daniel",
-      body: "daniel",
+      email: "",
+      title: "",
+      body: "",
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    toast({
+      title: "תודה! נחזור אליכם בהקדם!",
+    });
+
+    form.reset();
     // ✅ This will be type-safe and validated.
     console.log(values);
   };
@@ -47,7 +54,11 @@ export function Header() {
   return (
     <header className="w-full h-[8vh] flex justify-between p-5 items-center">
       <div className="flex justify-start">
-        <ModeToggle />
+        <img src={app_logo} className="w-8" />
+        <Button className="mr-6">בקשה חדשה</Button>
+        <TypographyP className="mr-9">הבקשות שלי</TypographyP>
+      </div>
+      <div className="flex justify-start">
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline" className="ml-6">
@@ -56,68 +67,91 @@ export function Header() {
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle className="flex justify-end mt-5">
+              <DialogTitle className="flex justify-start mt-5">
                 צור קשר
               </DialogTitle>
               <DialogDescription className="text-right pt-1">
-                !יש לכם משהו לומר לנו? אנא צרו איתנו קשר ונחזור אליכם בהקדם
+                יש לכם משהו לומר לנו? כתבו לנו ונחזור אליכם בהקדם!
               </DialogDescription>
             </DialogHeader>
             <div>
               <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="grid grid-cols-2 gap-8 text-right">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>שם</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="text-right"
-                            placeholder="name"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription className="text-right">
-                          .זה השם שיוצג אצלינו במערכת
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>דואר אלקטרוני</FormLabel>
-                        <FormControl>
-                          <Input placeholder="email" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit">שלח</Button>
-                  {/* <DialogClose asChild>
-                    <Button type="button" variant="secondary">
-                      סגור
-                    </Button>
-                  </DialogClose> */}
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                  <div className="grid grid-cols-2 gap-8 text-right mb-4">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>שם</FormLabel>
+                          <FormControl>
+                            <Input className="text-right" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>דואר אלקטרוני</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="email"
+                              placeholder="email"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="grid grid-cols-1 gap-4 text-right mb-4">
+                    <FormField
+                      control={form.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-right">כותרת</FormLabel>
+                          <FormControl>
+                            <Input className="text-right" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="body"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>גוף ההודעה</FormLabel>
+                          <FormControl>
+                            <Textarea
+                              className="min-h-[130px] resize-none text-right"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="flex justify-end ">
+                    <DialogClose>
+                      <Button type="submit">שלח</Button>
+                    </DialogClose>
+                  </div>
                 </form>
               </Form>
             </div>
             <DialogFooter className="sm:justify-start"></DialogFooter>
           </DialogContent>
         </Dialog>
-      </div>
-      <div className="flex justify-start ">
-        <Button className="mr-6">בקשה חדשה</Button>
-        <TypographyP className="mr-9">הבקשות שלי</TypographyP>
-        <img src={app_logo} className="w-8" />
+        <ModeToggle />
       </div>
     </header>
   );
