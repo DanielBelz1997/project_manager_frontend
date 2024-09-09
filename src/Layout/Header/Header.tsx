@@ -1,10 +1,13 @@
-import { ModeToggle } from "../../components/theme/mode_toggle";
-import app_logo from "../../assets/services/app_logo.png";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "@/hooks/use-toast";
+
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { TypographyP } from "@/components/ui/typography";
-import { formSchema } from "@/schemas/form-schema";
-
+import { ModeToggle } from "@/components/theme/mode_toggle";
 import {
   Dialog,
   DialogClose,
@@ -15,11 +18,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "@/hooks/use-toast";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
 import {
   Form,
   FormControl,
@@ -28,7 +26,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+
+import { formSchema } from "@/schemas/form-schema";
+import app_logo from "@/assets/services/app_logo.png";
 
 export function Header() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,22 +41,20 @@ export function Header() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (/* values: z.infer<typeof formSchema> */) => {
     toast({
       title: "תודה! נחזור אליכם בהקדם!",
     });
 
     form.reset();
-    // ✅ This will be type-safe and validated.
-    console.log(values);
   };
 
   return (
     <header className="w-full h-[8vh] flex justify-between p-5 items-center">
       <div className="flex justify-start">
         <img src={app_logo} className="w-8" />
-        <Button className="mr-6">בקשה חדשה</Button>
         <TypographyP className="mr-9">הבקשות שלי</TypographyP>
+        <Button className="mr-6">בקשה חדשה</Button>
       </div>
       <div className="flex justify-start">
         <Dialog>
