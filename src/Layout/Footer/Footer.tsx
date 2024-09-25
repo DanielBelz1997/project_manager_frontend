@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <div className="flex justify-center items-center mt-1.5">
+    <div className="flex justify-center items-center">
       &copy; כל הזכויות שמורות
     </div>
   );
