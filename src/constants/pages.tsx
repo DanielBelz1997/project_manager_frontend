@@ -11,4 +11,5 @@ export const PAGES = [
     path: "/another",
     element: <>hello another</>,
   },
+  
 ];

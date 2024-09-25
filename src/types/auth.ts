@@ -5,8 +5,15 @@ enum UserEnum {
 }
 
 export type User = {
-  id: string;
-  name: string;
-  email: string;
-  role: UserEnum;
+  user: { id: number; name: string } | null;
+  token: string | null;
+  role: UserEnum
 };
+
+export type AuthState = {
+  user: User['user'];
+  token: User['token'];
+  isAuthenticated: boolean;
+  login: (user: User['user'], token: string) => void;
+  logout: () => void;
+}
