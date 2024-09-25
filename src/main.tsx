@@ -5,12 +5,17 @@ import "./index.css";
 import { ThemeProvider } from "./context/Theme/theme_provider.tsx";
 import { DirectionProvider } from "@radix-ui/react-direction";
 import { Toaster } from "./components/ui/toaster.tsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <DirectionProvider dir="rtl">
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
         <Toaster />
       </DirectionProvider>
     </ThemeProvider>
