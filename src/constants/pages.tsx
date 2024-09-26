@@ -1,5 +1,6 @@
-import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute from "@/components/routes/ProtectedRoute";
 import Home from "@/pages/Home/Home";
+import LoginPage from "@/pages/Login/LoginPage";
 
 export const PAGES = [
   {
@@ -16,6 +17,11 @@ export const PAGES = [
     name: "not Found",
     path: "*",
     element: <>not Found. need to fix that</>,
+  },
+  {
+    name: "login",
+    path: "/login",
+    element: <LoginPage />
   },
   {
     name: 'admin',
