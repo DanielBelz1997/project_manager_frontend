@@ -1,5 +1,6 @@
 import ProtectedRoute from "@/components/routes/ProtectedRoute";
 import Home from "@/pages/Home/Home";
+import LoginPage from "@/pages/Login/LoginPage";
 import RegisterPage from "@/pages/Register/RegisterPage";
 
 export const PAGES = [
@@ -22,6 +23,11 @@ export const PAGES = [
     name: "register",
     path: "/register",
     element: <RegisterPage />
+  },
+  {
+    name: "login",
+    path: "/login",
+    element: <LoginPage />
   },
   {
     name: 'admin',
