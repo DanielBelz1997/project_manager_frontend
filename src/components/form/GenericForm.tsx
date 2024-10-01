@@ -1,31 +1,71 @@
-"use client"
+import * as React from "react";
+import { TypeOf, z, ZodTypeAny } from "zod";
+import { Path, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+// import { toast } from "@/hooks/use-toast";
 
-import * as React from "react"
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
-import { cn } from "@/lib/utils"
-import { Icons } from "@/components/icons"
-import { Button } from "@/components/ui/button"
-
-interface GenericFormProps extends React.HTMLAttributes<HTMLDivElement> {
-  onSubmit?: (event : React.SyntheticEvent) => void;
-  isLoading?: boolean
-  buttonText: string;
+// Generic form component props interface
+interface GenericFormProps<T extends ZodTypeAny> {
+  schema: T; // Zod schema for validation
+  defaultValues: z.infer<T>; // Default values inferred from the schema
+  onSubmit: (values: z.infer<T>) => void; // Submission handler
+  fields: Array<{
+    name: keyof z.infer<T>; // Field name from schema
+    label: string; // Label for the form field
+    type: "text" | "email" | "textarea"; // Type of the input field
+  }>;
 }
 
-export function GenericForm({ className, onSubmit, buttonText = 'שלח',isLoading = false, children ,...props }: GenericFormProps) {
+// Generic form component
+export function GenericForm<T extends ZodTypeAny>({
+  schema,
+  defaultValues,
+  onSubmit,
+  fields,
+}: GenericFormProps<T>) {
+  const form = useForm<z.infer<T>>({
+    resolver: zodResolver(schema), // Using Zod schema for validation
+    defaultValues,
+  });
+
   return (
-    <div className={cn("grid gap-6", className)} {...props}>
-      <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
-          {children}
-          <Button type='submit' disabled={isLoading}>
-            {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        {fields.map((field, index) => (
+          <FormField
+            key={index}
+            control={form.control}
+            name={field.name as Path<TypeOf<T>>}
+            render={({ field: controllerField }) => (
+              <FormItem>
+                <FormLabel>{field.label}</FormLabel>
+                <FormControl>
+                  {field.type === "textarea" ? (
+                    <Textarea {...controllerField} />
+                  ) : (
+                    <Input type={field.type} {...controllerField} />
+                  )}
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             )}
-            {buttonText}
-          </Button>
-        </div>
+          />
+        ))}
+        <Button type="submit">Submit</Button>
       </form>
-    </div>
-  )
+    </Form>
+  );
 }
+

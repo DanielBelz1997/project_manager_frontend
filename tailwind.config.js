@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        Heebo: ["Heebo", "sans-serif"], // Add your font here
+        Heebo: ["Heebo", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -58,3 +58,4 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 };
+
