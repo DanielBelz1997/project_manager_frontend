@@ -1,5 +1,3 @@
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
 import { UserAuthForm } from "@/components/login/user-auth-form"
 import { Link } from "react-router-dom"
 
@@ -37,6 +35,15 @@ export default function LoginPage() {
               className="underline underline-offset-4 hover:text-primary"
             >
               מדיניות פרטיות
+            </Link>
+          </p>
+          <p className="px-8 text-center text-sm text-muted-foreground">
+            רשום במערכת? {" "}
+            <Link
+            to='/login'
+            className="underline underline-offset-4 hover:text-primary"
+            >
+              התחבר  
             </Link>
           </p>
         </div>
