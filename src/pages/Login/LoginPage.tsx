@@ -19,24 +19,24 @@ export default function LoginPage() {
               צור חשבון
             </h1>
             <p className="text-sm text-muted-foreground">
-              הכנס כתובת מייל וצור חשבון במערכת
+              הכנס כתובת מייל וסיסמה וצור חשבון במערכת
             </p>
           </div>
           <UserAuthForm />
           <p className="px-8 text-center text-sm text-muted-foreground">
-            בלחיצה על המשך, אתה מצהיר על {" "}
+            בלחיצה על הרשם, אתה מצהיר על {" "}
             <Link
               to="/"
               className="underline underline-offset-4 hover:text-primary"
             >
-              Terms of Service
+              תנאי השירות
             </Link>{" "}
-            and{" "}
+            ועל{" "}
             <Link
               to="/"
               className="underline underline-offset-4 hover:text-primary"
             >
-              Privacy Policy
+              מדיניות פרטיות
             </Link>
           </p>
         </div>
