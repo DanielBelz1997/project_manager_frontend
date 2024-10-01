@@ -7,24 +7,32 @@ import { Link } from "react-router-dom";
 //   SelectTrigger,
 //   SelectValue,
 // } from "@/components/ui/select";
+
 import React from "react";
 import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const contactSchema = z.object({
-    name: z.string().min(1, "Name is required"),
+    first_name: z.string().min(1, "Name is required"),
     email: z.string().email("Invalid email"),
     message: z.string().min(1, "Message is required"),
   });
 
   const onSubmit = (values: z.infer<typeof contactSchema>) => {
+    setIsLoading(true);
+
     toast({
       title: "Form submitted successfully!",
       description: JSON.stringify(values),
     });
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   };
 
   return (
@@ -37,17 +45,22 @@ export default function RegisterPage() {
               הכנס את הפרטים הבאים וצור חשבון במערכת
             </p>
           </div>
-          <GenericForm
-            schema={contactSchema}
-            defaultValues={{ name: "", email: "", message: "" }}
-            onSubmit={onSubmit}
-            fields={[
-              { name: "name", label: "Name", type: "text" },
-              { name: "email", label: "Email", type: "email" },
-              { name: "message", label: "Message", type: "textarea" },
-              { name: "message", label: "Message", type: "textarea" },
-            ]}
-          />
+          <ScrollArea className="h-[350px] w-[350px] rounded-md border p-6">
+            <GenericForm
+              schema={contactSchema}
+              defaultValues={{ first_name: "", email: "", message: "" }}
+              onSubmit={onSubmit}
+              fields={[
+                { name: "first_name", label: "שם פרטי", type: "text" },
+                { name: "email", label: "Email", type: "email" },
+                { name: "message", label: "Message", type: "textarea" },
+                { name: "message", label: "Message", type: "textarea" },
+              ]}
+              className={""}
+              acceptText={"הרשם"}
+              isLoading={isLoading}
+            />
+          </ScrollArea>
           {/* <div className="grid grid-cols-2 gap-1">
             <Input
               id="first_name"

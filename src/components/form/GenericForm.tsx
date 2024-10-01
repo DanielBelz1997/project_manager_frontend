@@ -1,8 +1,6 @@
-import * as React from "react";
 import { TypeOf, z, ZodTypeAny } from "zod";
 import { Path, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import { toast } from "@/hooks/use-toast";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,9 +13,13 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
+import { Icons } from "../icons";
 
 // Generic form component props interface
 interface GenericFormProps<T extends ZodTypeAny> {
+  className: string;
+  acceptText: string;
   schema: T; // Zod schema for validation
   defaultValues: z.infer<T>; // Default values inferred from the schema
   onSubmit: (values: z.infer<T>) => void; // Submission handler
@@ -26,14 +28,19 @@ interface GenericFormProps<T extends ZodTypeAny> {
     label: string; // Label for the form field
     type: "text" | "email" | "textarea"; // Type of the input field
   }>;
+  isLoading: boolean;
 }
 
 // Generic form component
 export function GenericForm<T extends ZodTypeAny>({
+  className,
+  acceptText = "שלח",
   schema,
   defaultValues,
   onSubmit,
   fields,
+  isLoading,
+  ...props
 }: GenericFormProps<T>) {
   const form = useForm<z.infer<T>>({
     resolver: zodResolver(schema), // Using Zod schema for validation
@@ -42,29 +49,38 @@ export function GenericForm<T extends ZodTypeAny>({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        {fields.map((field, index) => (
-          <FormField
-            key={index}
-            control={form.control}
-            name={field.name as Path<TypeOf<T>>}
-            render={({ field: controllerField }) => (
-              <FormItem>
-                <FormLabel>{field.label}</FormLabel>
-                <FormControl>
-                  {field.type === "textarea" ? (
-                    <Textarea {...controllerField} />
-                  ) : (
-                    <Input type={field.type} {...controllerField} />
-                  )}
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        ))}
-        <Button type="submit">Submit</Button>
-      </form>
+      <div className={cn("grid gap-6", className)} {...props}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          {fields.map((field, index) => (
+            <FormField
+              key={index}
+              control={form.control}
+              name={field.name as Path<TypeOf<T>>}
+              render={({ field: controllerField }) => (
+                <FormItem className="grid gap-1 mb-5">
+                  <FormLabel>{field.label}</FormLabel>
+                  <FormControl className="">
+                    {field.type === "textarea" ? (
+                      <Textarea {...controllerField} />
+                    ) : (
+                      <Input type={field.type} {...controllerField} />
+                    )}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+          <div className="flex justify-center">
+            <Button type="submit" disabled={isLoading}>
+              {isLoading && (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              {acceptText}
+            </Button>
+          </div>
+        </form>
+      </div>
     </Form>
   );
 }
