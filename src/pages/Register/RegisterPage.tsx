@@ -26,6 +26,7 @@ export default function RegisterPage() {
       repeat_password: z.string(),
       phone_number: z.string().length(10, "phone number is required"),
       message: z.string().min(1, "Message is required"),
+      avatar: z.instanceof(File).nullable(),
     })
     .refine((data) => data.password === data.repeat_password, {
       path: ["repeat_password"],
@@ -66,6 +67,7 @@ export default function RegisterPage() {
                 password: "",
                 repeat_password: "",
                 phone_number: "",
+                avatar: null,
                 message: "",
               }}
               onSubmit={onSubmit}
@@ -95,7 +97,9 @@ export default function RegisterPage() {
                   type: "password",
                 },
                 { name: "phone_number", label: "מספר טלפון", type: "text" },
+                { name: "phone_number", label: "מספר טלפון", type: "text" },
                 { name: "message", label: "Message", type: "textarea" },
+                { name: "avatar", label: "תמונת פרופיל", type: "file" },
               ]}
               className={""}
               acceptText={"הרשם"}
@@ -104,26 +108,6 @@ export default function RegisterPage() {
           </ScrollArea>
           {/*
             />
-          </div>
-          <div className="grid gap-1">
-            <Input
-              id="password"
-              type="password"
-              placeholder="סיסמה"
-              autoComplete="new-password"
-            />
-          </div>
-          <div className="grid gap-1">
-            <Input
-              id="password"
-              type="password"
-              placeholder="חזור על הסיסמה"
-              autoComplete="new-password"
-            />
-          </div>
-          <div className="grid gap-1">
-            <Input id="phone_number" type="text" placeholder="מספר טלפון" />
-          </div>
           <Select>
             <SelectTrigger>
               <SelectValue placeholder="Select a verified email to display" />
