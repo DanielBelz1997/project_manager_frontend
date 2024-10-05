@@ -26,7 +26,8 @@ interface GenericFormProps<T extends ZodTypeAny> {
   fields: Array<{
     name: keyof z.infer<T>; // Field name from schema
     label: string; // Label for the form field
-    type: "text" | "email" | "textarea"; // Type of the input field
+    type: HTMLInputElement["type"];
+    placeholder?: string;
   }>;
   isLoading: boolean;
 }
@@ -57,13 +58,26 @@ export function GenericForm<T extends ZodTypeAny>({
               control={form.control}
               name={field.name as Path<TypeOf<T>>}
               render={({ field: controllerField }) => (
-                <FormItem className="grid gap-1 mb-5">
+                <FormItem className="grid gap-1 mb-5 ml-1 mr-1">
                   <FormLabel>{field.label}</FormLabel>
                   <FormControl className="">
                     {field.type === "textarea" ? (
-                      <Textarea {...controllerField} />
+                      <Textarea
+                        placeholder={field.placeholder}
+                        {...controllerField}
+                      />
+                    ) : field.type === "text" ? (
+                      <Input
+                        placeholder={field.placeholder}
+                        type={field.type}
+                        {...controllerField}
+                      />
                     ) : (
-                      <Input type={field.type} {...controllerField} />
+                      <Input
+                        placeholder={field.placeholder}
+                        type={field.type}
+                        {...controllerField}
+                      />
                     )}
                   </FormControl>
                   <FormMessage />

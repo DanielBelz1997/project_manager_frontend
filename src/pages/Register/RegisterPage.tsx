@@ -16,11 +16,21 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const contactSchema = z.object({
-    first_name: z.string().min(1, "Name is required"),
-    email: z.string().email("Invalid email"),
-    message: z.string().min(1, "Message is required"),
-  });
+  const contactSchema = z
+    .object({
+      first_name: z.string().min(1, "first name is required"),
+      last_name: z.string().min(1, "last name is required"),
+      username: z.string().min(1, "username is required"),
+      email: z.string().email("Invalid email"),
+      password: z.string().min(8, "make me stronger!"),
+      repeat_password: z.string(),
+      phone_number: z.string().length(10, "phone number is required"),
+      message: z.string().min(1, "Message is required"),
+    })
+    .refine((data) => data.password === data.repeat_password, {
+      path: ["repeat_password"],
+      message: "please make them match",
+    });
 
   const onSubmit = (values: z.infer<typeof contactSchema>) => {
     setIsLoading(true);
@@ -48,12 +58,43 @@ export default function RegisterPage() {
           <ScrollArea className="h-[350px] w-[350px] rounded-md border p-6">
             <GenericForm
               schema={contactSchema}
-              defaultValues={{ first_name: "", email: "", message: "" }}
+              defaultValues={{
+                first_name: "",
+                last_name: "",
+                username: "",
+                email: "",
+                password: "",
+                repeat_password: "",
+                phone_number: "",
+                message: "",
+              }}
               onSubmit={onSubmit}
               fields={[
                 { name: "first_name", label: "שם פרטי", type: "text" },
-                { name: "email", label: "Email", type: "email" },
-                { name: "message", label: "Message", type: "textarea" },
+                { name: "last_name", label: "שם משפחה", type: "text" },
+                {
+                  name: "username",
+                  label: "שם משתמש",
+                  type: "text",
+                  placeholder: "תוצג במערכת בשם זה",
+                },
+                {
+                  name: "email",
+                  label: "אימייל",
+                  type: "email",
+                  placeholder: "youre@email.com",
+                },
+                {
+                  name: "password",
+                  label: "סיסמה",
+                  type: "password",
+                },
+                {
+                  name: "repeat_password",
+                  label: "חזור על הסיסמה",
+                  type: "password",
+                },
+                { name: "phone_number", label: "מספר טלפון", type: "text" },
                 { name: "message", label: "Message", type: "textarea" },
               ]}
               className={""}
@@ -61,34 +102,7 @@ export default function RegisterPage() {
               isLoading={isLoading}
             />
           </ScrollArea>
-          {/* <div className="grid grid-cols-2 gap-1">
-            <Input
-              id="first_name"
-              type="text"
-              placeholder="שם פרטי"
-              autoComplete="additional-name"
-            />
-            <Input
-              id="last_name"
-              type="text"
-              placeholder="שם משפחה"
-              autoComplete="additional-name webauthn"
-            />
-          </div>
-          <div className="grid gap-1">
-            <Input
-              id="email"
-              type="email"
-              placeholder="שם משתמש"
-              autoComplete="email"
-            />
-          </div>
-          <div className="grid gap-1">
-            <Input
-              id="email"
-              type="email"
-              placeholder="youre@email.com"
-              autoComplete="email"
+          {/*
             />
           </div>
           <div className="grid gap-1">
