@@ -25,7 +25,7 @@ export default function RegisterPage() {
       password: z.string().min(8, "make me stronger!"),
       repeat_password: z.string(),
       phone_number: z.string().length(10, "phone number is required"),
-      message: z.string().min(1, "Message is required"),
+      group: z.string().min(1, "Please select group"),
       avatar: z.instanceof(File).nullable(),
     })
     .refine((data) => data.password === data.repeat_password, {
@@ -68,7 +68,7 @@ export default function RegisterPage() {
                 repeat_password: "",
                 phone_number: "",
                 avatar: null,
-                message: "",
+                group: "כללי",
               }}
               onSubmit={onSubmit}
               fields={[
@@ -97,8 +97,7 @@ export default function RegisterPage() {
                   type: "password",
                 },
                 { name: "phone_number", label: "מספר טלפון", type: "text" },
-                { name: "phone_number", label: "מספר טלפון", type: "text" },
-                { name: "message", label: "Message", type: "textarea" },
+                { name: "group", label: "שייכות לקבוצה", type: "select" },
                 { name: "avatar", label: "תמונת פרופיל", type: "file" },
               ]}
               className={""}

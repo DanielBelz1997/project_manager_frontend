@@ -16,6 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Icons } from "../icons";
 import AvatarUpload from "../ui/avatar_upload";
+import SelectForm from "../ui/select_form";
 
 // Generic form component props interface
 interface GenericFormProps<T extends ZodTypeAny> {
@@ -75,6 +76,8 @@ export function GenericForm<T extends ZodTypeAny>({
                       />
                     ) : field.type === "file" ? (
                       <AvatarUpload />
+                    ) : field.type === "select" ? (
+                      <SelectForm />
                     ) : (
                       <Input
                         placeholder={field.placeholder}
