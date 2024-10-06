@@ -29,6 +29,7 @@ import {
 
 import { formSchema } from "@/schemas/form-schema";
 import app_logo from "@/assets/services/app_logo.png";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,7 +55,11 @@ export function Header() {
       <div className="flex justify-start">
         <img src={app_logo} className="w-8" />
         <TypographyP className="mr-9">הבקשות שלי</TypographyP>
-        <Button className="mr-6">בקשה חדשה</Button>
+        <Link
+          to="/register"
+          className="underline underline-offset-4 hover:text-primary">
+          מדיניות פרטיות
+        </Link>
       </div>
       <div className="flex justify-start">
         <Dialog>
@@ -156,3 +161,4 @@ export function Header() {
 }
 
 export default Header;
+

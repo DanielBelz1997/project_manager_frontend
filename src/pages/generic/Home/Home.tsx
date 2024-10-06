@@ -1,5 +1,5 @@
 import React from "react";
-import app_logo from "../../assets/services/app_logo.png";
+import app_logo from "../../../assets/services/app_logo.png";
 
 import {
   Carousel,
@@ -82,3 +82,4 @@ export default function Home() {
     </div>
   );
 }
+

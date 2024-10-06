@@ -1,7 +1,7 @@
 import ProtectedRoute from "@/components/routes/ProtectedRoute";
-import Home from "@/pages/Home/Home";
-import LoginPage from "@/pages/Login/LoginPage";
-import RegisterPage from "@/pages/Register/RegisterPage";
+import Home from "@/pages/generic/Home/Home";
+import LoginPage from "@/pages/generic/Login/LoginPage";
+import RegisterPage from "@/pages/generic/Register/RegisterPage";
 
 export const PAGES = [
   {
@@ -22,16 +22,21 @@ export const PAGES = [
   {
     name: "register",
     path: "/register",
-    element: <RegisterPage />
+    element: <RegisterPage />,
   },
   {
     name: "login",
     path: "/login",
-    element: <LoginPage />
+    element: <LoginPage />,
   },
   {
-    name: 'admin',
+    name: "admin",
     path: "/admin",
-    element: <ProtectedRoute requiredRole="admin"><>admin bro</></ProtectedRoute>
-  }
+    element: (
+      <ProtectedRoute requiredRole="admin">
+        <>admin bro</>
+      </ProtectedRoute>
+    ),
+  },
 ];
+
