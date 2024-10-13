@@ -29,6 +29,7 @@ import {
 
 import { formSchema } from "@/schemas/form-schema";
 import app_logo from "@/assets/services/app_logo.png";
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,6 +42,8 @@ export function Header() {
     },
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = (/* values: z.infer<typeof formSchema> */) => {
     toast({
       title: "תודה! נחזור אליכם בהקדם!",
@@ -52,8 +55,16 @@ export function Header() {
   return (
     <header className="w-full h-[8vh] flex justify-between p-5 items-center">
       <div className="flex justify-start">
-        <img src={app_logo} className="w-8" />
-        <TypographyP className="mr-9">הבקשות שלי</TypographyP>
+        <img
+          src={app_logo}
+          onClick={() => navigate("/")}
+          className="w-8 cursor-pointer"
+        />
+        <TypographyP
+          onClick={() => navigate("/myRequests")}
+          className="mr-9 cursor-pointer">
+          הבקשות שלי
+        </TypographyP>
         <Button className="mr-6">בקשה חדשה</Button>
       </div>
       <div className="flex justify-start">
@@ -156,3 +167,4 @@ export function Header() {
 }
 
 export default Header;
+

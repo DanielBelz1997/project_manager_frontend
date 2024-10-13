@@ -1,15 +1,15 @@
 import React from "react";
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
-import { LayoutProps } from "@/types/layout";
 import { Separator } from "@/components/ui/separator";
+import { Outlet } from "react-router-dom";
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC = () => {
   return (
-    <div className="h-[100vh] w-[100vw]">
+    <div className="h-[88vh] w-[100vw]">
       <Header />
       <Separator />
-      <main className="overflow-y-auto h-[88vh]">{children}</main>
+      <Outlet />
       <Separator />
       <Footer />
     </div>
@@ -17,3 +17,4 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 };
 
 export default Layout;
+
