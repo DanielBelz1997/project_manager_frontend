@@ -30,8 +30,11 @@ import {
 import { formSchema } from "@/schemas/form-schema";
 import app_logo from "@/assets/services/app_logo.png";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 export function Header() {
+  const [loggedIn, setLoggedIn] = React.useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,19 +56,30 @@ export function Header() {
   };
 
   return (
-    <header className="w-full h-[8vh] flex justify-between p-5 items-center">
+    <header className="w-full h-[10vh] flex justify-between p-5 items-center">
       <div className="flex justify-start">
         <img
           src={app_logo}
           onClick={() => navigate("/")}
-          className="w-8 cursor-pointer"
+          className="w-14 cursor-pointer"
         />
-        <TypographyP
-          onClick={() => navigate("/myRequests")}
-          className="mr-9 cursor-pointer">
-          הבקשות שלי
-        </TypographyP>
-        <Button className="mr-6">בקשה חדשה</Button>
+        {loggedIn ? (
+          <div className="flex justify-start">
+            <TypographyP
+              onClick={() => navigate("/myRequests")}
+              className="mr-9 cursor-pointer mt-5">
+              הבקשות שלי
+            </TypographyP>
+            <Button className="mr-6 mt-2.5">בקשה חדשה</Button>
+          </div>
+        ) : (
+          <Button
+            className="mr-6 mt-2.5"
+            variant="outline"
+            onClick={() => navigate("/login")}>
+            התחבר
+          </Button>
+        )}
       </div>
       <div className="flex justify-start">
         <Dialog>

@@ -35,9 +35,11 @@ export default function Home() {
 
   return (
     <div className="w-full h-full p-40 flex justify-around items-center">
-      <div>
-        <img className="w-40" src={app_logo} />
-        <span className="flex justify-center">כל הבקשות שלכם, במקום אחד.</span>
+      <div className="">
+        <img className="w-48" src={app_logo} />
+        <span className="flex justify-center mt-5">
+          כל הבקשות שלכם, במקום אחד.
+        </span>
       </div>
       <div className="w-96">
         <Carousel
@@ -82,3 +84,4 @@ export default function Home() {
     </div>
   );
 }
+
