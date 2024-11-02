@@ -1,50 +1,51 @@
-import { useAuthStore } from "@/store/auth"
-import { useMutation, useQuery } from "react-query"
-import axios from "axios"
-import { User } from "@/types/auth"
+import { useAuthStore } from "@/store/auth";
+import {
+  useMutation,
+  useQuery,
+  QueryClient,
+  useQueryClient,
+} from "react-query";
+import axios from "axios";
+import { User } from "@/types/auth";
+import { login as loginApi } from "@/api/login";
 
 export const useAuth = () => {
-  const { login, logout, user, token, isAuthenticated } = useAuthStore()
+  const { login, logout, user, token, isAuthenticated } = useAuthStore();
 
-  const loginMutation = useMutation(
-    async (credentials: { email: string; password: string; }) => {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}`, credentials);
-      return response.data;
-    },
-    {
-      onSuccess(data: User) {
-        if (data.token) {
-          login(data.user, data.token)
-        } else {
-          throw new Error("no token here...")
-        }
-      },
-      onError(error) {
-        console.error('Login Failed', error) // implementing a function that replace this
+  return useMutation({
+    mutationFn: loginApi,
+    onSuccess(data: User) {
+      if (data.token) {
+        login(data.user, data.token);
+      } else {
+        throw new Error("no token here...");
       }
-    }
-  )
+    },
+    onError(error) {
+      console.log("login failed, error: ", error);
+    },
+  });
 
   const { data: roleData, isLoading: roleLoading } = useQuery(
-    'UserRole',
+    "UserRole",
     async () => {
-      if (!token) throw new Error('no token available');
+      if (!token) throw new Error("no token available");
       const response = await axios.get(`${import.meta.env.VITE_API_URL}/role`, {
         headers: {
-          Authorization: `Breaer : ${token}`
-        }
+          Authorization: `Breaer : ${token}`,
+        },
       });
 
       return response.data;
     },
     {
-      enabled: !!token
+      enabled: !!token,
     }
-  )
+  );
 
   const handleLogout = () => {
-    logout()
-  }
+    logout();
+  };
 
   return {
     login: loginMutation.mutateAsync,
@@ -52,6 +53,7 @@ export const useAuth = () => {
     user,
     isAuthenticated,
     role: roleData?.role || null,
-    roleLoading
-  }
-}
+    roleLoading,
+  };
+};
+
