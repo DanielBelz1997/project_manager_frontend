@@ -31,9 +31,10 @@ import { formSchema } from "@/schemas/form-schema";
 import app_logo from "@/assets/services/app_logo.png";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { useAuthStore } from "@/store/auth";
 
 export function Header() {
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const token = useAuthStore((state) => state.token);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,7 +64,7 @@ export function Header() {
           onClick={() => navigate("/")}
           className="w-14 cursor-pointer"
         />
-        {loggedIn ? (
+        {token ? (
           <div className="flex justify-start">
             <TypographyP
               onClick={() => navigate("/myRequests")}

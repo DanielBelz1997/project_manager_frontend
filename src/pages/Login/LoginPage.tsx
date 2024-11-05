@@ -5,12 +5,15 @@ import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { useLogin } from "@/hooks/useLogin";
 import { useAuthStore } from "@/store/auth";
+import { useNavigate } from "react-router-dom";
 // import { Credentials } from "@/types/auth";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = React.useState(false);
-  // const [credentials, setCredentials] = React.useState<Credentials>();
+
   const loginMutation = useLogin();
+
+  const navigate = useNavigate();
 
   const contactSchema = z.object({
     email: z.string().email("email is required"),
@@ -26,6 +29,7 @@ export default function LoginPage() {
         onSuccess: (data) => {
           console.log(data);
           useAuthStore.getState().setToken(data.access_token);
+          navigate("/");
           toast({
             title: "Form submitted successfully!",
             description: JSON.stringify(values),
