@@ -1,22 +1,17 @@
-import React from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
+import { useAuthStore } from "@/store/auth";
+import React from "react";
+import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   children: JSX.Element;
-  requiredRole: 'admin' | 'user';
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {
-  const { isAuthenticated, role, roleLoading } = useAuth();
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+  const token = useAuthStore((state) => state.token);
 
-  if (roleLoading) return <div>Loading...</div>;
-
-  if (!isAuthenticated || role !== requiredRole) {
-    return <Navigate to="/login" />;
-  }
-
-  return children;
+  return token ? children : <Navigate to={"/unauthorized"} replace />;
 };
 
 export default ProtectedRoute;
+

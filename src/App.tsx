@@ -8,7 +8,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="*" element={<div>not found bro</div>} />
-          <Route path="unauthorized" element={<>not authorized bro</>} />
+          <Route path="/unauthorized" element={<>not authorized bro</>} />
           <Route path="/" element={<Layout />}>
             {PAGES.map((page) => (
               <Route key={page.path} path={page.path} element={page.element} />

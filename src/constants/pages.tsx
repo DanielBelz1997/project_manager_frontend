@@ -29,7 +29,7 @@ export const PAGES = [
     name: "admin",
     path: "/admin",
     element: (
-      <ProtectedRoute requiredRole="admin">
+      <ProtectedRoute>
         <>admin bro</>
       </ProtectedRoute>
     ),

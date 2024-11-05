@@ -3,26 +3,44 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { useLogin } from "@/hooks/useLogin";
+import { useAuthStore } from "@/store/auth";
+// import { Credentials } from "@/types/auth";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = React.useState(false);
+  // const [credentials, setCredentials] = React.useState<Credentials>();
+  const loginMutation = useLogin();
 
   const contactSchema = z.object({
-    username: z.string().min(1, "username is required"),
+    email: z.string().email("email is required"),
     password: z.string().min(8, "make me stronger!"),
   });
 
   const onSubmit = (values: z.infer<typeof contactSchema>) => {
     setIsLoading(true);
 
-    toast({
-      title: "Form submitted successfully!",
-      description: JSON.stringify(values),
-    });
+    loginMutation.mutate(
+      { email: values.email, password: values.password },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+          useAuthStore.getState().setToken(data.access_token);
+          toast({
+            title: "Form submitted successfully!",
+            description: JSON.stringify(values),
+          });
+        },
+        onError: (e) => {
+          toast({ title: "login failed", description: e.message });
+        },
+        onSettled: () => {
+          setIsLoading(false);
+        },
+      }
+    );
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+    setTimeout(() => {}, 3000);
   };
 
   return (
@@ -35,14 +53,14 @@ export default function LoginPage() {
           <GenericForm
             schema={contactSchema}
             defaultValues={{
-              username: "",
+              email: "",
               password: "",
             }}
             onSubmit={onSubmit}
             fields={[
               {
-                name: "username",
-                label: "שם משתמש",
+                name: "email",
+                label: "אימייל",
                 type: "text",
               },
               {
