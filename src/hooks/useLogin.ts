@@ -9,8 +9,9 @@ export const useLogin = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["login"] });
     },
-    onError: (error) => {
+    onError: (error: unknown) => {
       console.error(error);
     },
   });
 };
+

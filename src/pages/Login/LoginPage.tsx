@@ -27,8 +27,7 @@ export default function LoginPage() {
       { email: values.email, password: values.password },
       {
         onSuccess: (data) => {
-          console.log(data);
-          useAuthStore.getState().setToken(data.access_token);
+          useAuthStore.getState().setToken(data?.access_token);
           navigate("/");
           toast({
             title: "Form submitted successfully!",
@@ -36,7 +35,8 @@ export default function LoginPage() {
           });
         },
         onError: (e) => {
-          toast({ title: "login failed", description: e.message });
+          if (e instanceof Error)
+            toast({ title: "login failed", description: e.message });
         },
         onSettled: () => {
           setIsLoading(false);
