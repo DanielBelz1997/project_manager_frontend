@@ -27,12 +27,16 @@ export default function LoginPage() {
       { email: values.email, password: values.password },
       {
         onSuccess: (data) => {
-          useAuthStore.getState().setToken(data?.access_token);
-          navigate("/");
-          toast({
-            title: "Form submitted successfully!",
-            description: JSON.stringify(values),
-          });
+          if (data.access_token) {
+            useAuthStore.getState().setToken(data.access_token);
+            navigate("/");
+            toast({
+              title: "התגעגענו!",
+              description: "עכשיו תוכל לבצע פעולות במערכת",
+            });
+          } else {
+            toast({ title: "login failed", description: "no token provided" });
+          }
         },
         onError: (e) => {
           if (e instanceof Error)

@@ -68,3 +68,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-hover-button {
+  @apply mr-6 mt-2.5;
+}
+
+.custom-hover-button:hover {
+  background-color: #4299e1; /* Example color */
+}
+

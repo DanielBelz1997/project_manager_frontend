@@ -6,7 +6,6 @@ import { toast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { TypographyP } from "@/components/ui/typography";
 import { ModeToggle } from "@/components/theme/mode_toggle";
 import {
   Dialog,
@@ -30,7 +29,6 @@ import {
 import { formSchema } from "@/schemas/form-schema";
 import app_logo from "@/assets/services/app_logo.png";
 import { useNavigate } from "react-router-dom";
-import React from "react";
 import { useAuthStore } from "@/store/auth";
 
 export function Header() {
@@ -66,12 +64,15 @@ export function Header() {
         />
         {token ? (
           <div className="flex justify-start">
-            <TypographyP
+            <Button
               onClick={() => navigate("/myRequests")}
-              className="mr-9 cursor-pointer mt-5">
+              variant="secondary"
+              className="mr-9 cursor-pointer mt-2.5">
               הבקשות שלי
-            </TypographyP>
-            <Button className="mr-6 mt-2.5">בקשה חדשה</Button>
+            </Button>
+            <Button className="mr-6 mt-2.5" variant="secondary">
+              בקשה חדשה
+            </Button>
           </div>
         ) : (
           <Button
@@ -83,6 +84,17 @@ export function Header() {
         )}
       </div>
       <div className="flex justify-start">
+        {token ? (
+          <Button
+            className="ml-6 "
+            variant="destructive"
+            onClick={() => {
+              useAuthStore.getState().clearToken();
+              navigate("/login");
+            }}>
+            התנתק
+          </Button>
+        ) : null}
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline" className="ml-6">
