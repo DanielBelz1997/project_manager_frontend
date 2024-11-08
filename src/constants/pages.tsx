@@ -23,7 +23,11 @@ export const PAGES = [
   {
     name: "myRequests",
     path: "/myRequests",
-    element: <MyRequests />,
+    element: (
+      <ProtectedRoute>
+        <MyRequests />
+      </ProtectedRoute>
+    ),
   },
   {
     name: "admin",

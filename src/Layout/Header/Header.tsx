@@ -33,6 +33,7 @@ import { useAuthStore } from "@/store/auth";
 
 export function Header() {
   const token = useAuthStore((state) => state.token);
+  const username = useAuthStore((state) => state.username);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,14 +64,20 @@ export function Header() {
           className="w-14 cursor-pointer"
         />
         {token ? (
-          <div className="flex justify-start">
+          <div className="flex justify-start mt-2.5">
+            <Button
+              onClick={() => navigate("/myRequests")}
+              variant="link"
+              className="mr-6 cursor-pointer">
+              ברוך הבא {username}!
+            </Button>
             <Button
               onClick={() => navigate("/myRequests")}
               variant="secondary"
-              className="mr-9 cursor-pointer mt-2.5">
+              className="mr-6 cursor-pointer">
               הבקשות שלי
             </Button>
-            <Button className="mr-6 mt-2.5" variant="secondary">
+            <Button className="mr-6" variant="secondary">
               בקשה חדשה
             </Button>
           </div>

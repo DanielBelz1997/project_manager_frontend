@@ -10,7 +10,9 @@ export type Credentials = {
 };
 
 export type AuthState = {
+  username: string | null;
   token: string | null;
+  setUsername: (username: string) => void;
   setToken: (token: string) => void;
   clearToken: () => void;
 };

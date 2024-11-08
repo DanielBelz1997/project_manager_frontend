@@ -29,6 +29,7 @@ export default function LoginPage() {
         onSuccess: (data) => {
           if (data.access_token) {
             useAuthStore.getState().setToken(data.access_token);
+            useAuthStore.getState().setUsername(data.username);
             navigate("/");
             toast({
               title: "התגעגענו!",
