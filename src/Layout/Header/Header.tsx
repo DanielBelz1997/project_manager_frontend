@@ -96,7 +96,7 @@ export function Header() {
             className="ml-6 "
             variant="destructive"
             onClick={() => {
-              useAuthStore.getState().clearToken();
+              useAuthStore.getState().clearLogin();
               navigate("/login");
             }}>
             התנתק
