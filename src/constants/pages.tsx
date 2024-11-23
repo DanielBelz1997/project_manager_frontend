@@ -1,4 +1,5 @@
 import ProtectedRoute from "@/components/routes/ProtectedRoute";
+import { AdminHomePage } from "@/pages/Admin/AdminHomePage";
 import { MyRequests } from "@/pages/clients/Requests/myRequests";
 import Home from "@/pages/Home/Home";
 import LoginPage from "@/pages/Login/LoginPage";
@@ -34,7 +35,7 @@ export const PAGES = [
     path: "/admin",
     element: (
       <ProtectedRoute>
-        <>admin bro</>
+        <AdminHomePage />
       </ProtectedRoute>
     ),
   },

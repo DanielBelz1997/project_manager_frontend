@@ -27,16 +27,25 @@ export default function LoginPage() {
       { email: values.email, password: values.password },
       {
         onSuccess: (data) => {
-          if (data.access_token) {
+          console.log(data);
+          if (data?.access_token !== undefined) {
             useAuthStore.getState().setToken(data.access_token);
             useAuthStore.getState().setUsername(data.username);
-            navigate("/");
+            useAuthStore.getState().setRole(data.role);
+            if (data.role === 1) {
+              navigate("/admin");
+            } else {
+              navigate("/");
+            }
             toast({
               title: "התגעגענו!",
               description: "עכשיו תוכל לבצע פעולות במערכת",
             });
           } else {
-            toast({ title: "login failed", description: "no token provided" });
+            toast({
+              title: "login failed",
+              description: "wrong password or email. please try again",
+            });
           }
         },
         onError: (e) => {

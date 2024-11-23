@@ -12,8 +12,9 @@ export type Credentials = {
 export type AuthState = {
   username: string | null;
   token: string | null;
+  role: string | null;
+  setRole: (role: string) => void;
   setUsername: (username: string) => void;
   setToken: (token: string) => void;
-  clearToken: () => void;
 };
 
