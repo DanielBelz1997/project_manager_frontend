@@ -34,6 +34,7 @@ import { useAuthStore } from "@/store/auth";
 export function Header() {
   const token = useAuthStore((state) => state.token);
   const username = useAuthStore((state) => state.username);
+  const role = useAuthStore((state) => state.role);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -71,15 +72,19 @@ export function Header() {
               className="mr-6 cursor-pointer">
               ברוך הבא {username}!
             </Button>
-            <Button
-              onClick={() => navigate("/myRequests")}
-              variant="secondary"
-              className="mr-6 cursor-pointer">
-              הבקשות שלי
-            </Button>
-            <Button className="mr-6" variant="secondary">
-              בקשה חדשה
-            </Button>
+            {role !== "1" && (
+              <>
+                <Button
+                  onClick={() => navigate("/myRequests")}
+                  variant="secondary"
+                  className="mr-6 cursor-pointer">
+                  הבקשות שלי
+                </Button>
+                <Button className="mr-6" variant="secondary">
+                  בקשה חדשה
+                </Button>
+              </>
+            )}
           </div>
         ) : (
           <Button

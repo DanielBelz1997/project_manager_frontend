@@ -10,6 +10,7 @@ export type Credentials = {
 };
 
 export type AuthState = {
+  clearLogin(): unknown;
   username: string | null;
   token: string | null;
   role: string | null;
