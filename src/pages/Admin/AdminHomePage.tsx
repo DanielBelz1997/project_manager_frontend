@@ -10,6 +10,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export const AdminHomePage = () => {
   const [layoutLocked, isLayoutLocked] = useState<boolean>(false);
@@ -20,33 +28,19 @@ export const AdminHomePage = () => {
     { i: "kuriboh", x: 2, y: 0, w: 1, h: 1 },
     { i: "spell-caster", x: 3, y: 0, w: 1, h: 1 },
     { i: "summoned-skull", x: 4, y: 0, w: 1, h: 1 },
+    { i: "meme", x: 4, y: 0, w: 1, h: 1 },
   ];
 
   const sideBarButton =
-    "transition-transform transform size-10 m-4 cursor-pointer hover:scale-110";
-
-  const GridItemWrapper = styled.div`
-    background: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  `;
+    "transition-transform transform size-8 m-4 cursor-pointer hover:scale-110";
 
   const DragHandle = styled.div`
     cursor: move;
-    background: #4a90e2;
     color: white;
     padding: 8px;
     text-align: center;
+    border-bottom: 1px solid #ddd;
     font-weight: bold;
-  `;
-
-  const GridItemContent = styled.div`
-    padding: 8px;
-    flex-grow: 1;
   `;
 
   return (
@@ -56,21 +50,48 @@ export const AdminHomePage = () => {
           {layoutLocked ? (
             <Tooltip>
               <TooltipTrigger>
+                <CiLock className={sideBarButton} />
+              </TooltipTrigger>
+              <TooltipContent side="left" className="mr-3">
+                שחרור גליון
+              </TooltipContent>
+            </Tooltip>
+          ) : (
+            <Tooltip>
+              <TooltipTrigger>
                 <CiUnlock className={sideBarButton} />
               </TooltipTrigger>
               <TooltipContent side="left" className="mr-3">
                 נעילת גליון
               </TooltipContent>
             </Tooltip>
-          ) : (
-            <CiLock className={sideBarButton} />
           )}
         </div>
-        <div className="">
-          <></>
-          <TbTable className={sideBarButton} />
-          <VscGraph className={sideBarButton} />
-          <FaRegNoteSticky className={sideBarButton} />
+        <div className="flex flex-col">
+          <Tooltip>
+            <TooltipTrigger>
+              <TbTable className={sideBarButton} />
+            </TooltipTrigger>
+            <TooltipContent side="left" className="mr-3">
+              טבלה חדשה
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <VscGraph className={sideBarButton} />
+            </TooltipTrigger>
+            <TooltipContent side="left" className="mr-3">
+              גרף חדש
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger>
+              <FaRegNoteSticky className={sideBarButton} />
+            </TooltipTrigger>
+            <TooltipContent side="left" className="mr-3">
+              פתק חדש
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
       <div className="flex justify-end h-full">
@@ -81,26 +102,21 @@ export const AdminHomePage = () => {
           style={{ direction: "ltr" }}
           isDraggable={!layoutLocked}
           draggableHandle=".drag-handle">
-          <GridItemWrapper key="blue-eyes-dragon">
-            <DragHandle className="drag-handle">Blue Eyes Dragon</DragHandle>
-            <GridItemContent>Blue Eyes Dragon</GridItemContent>
-          </GridItemWrapper>
-          <GridItemWrapper key="dark-magician">
-            <DragHandle className="drag-handle">Dark Magician</DragHandle>
-            <GridItemContent>Dark Magician</GridItemContent>
-          </GridItemWrapper>
-          <GridItemWrapper key="kuriboh">
-            <DragHandle className="drag-handle">Kuriboh</DragHandle>
-            <GridItemContent>Kuriboh</GridItemContent>
-          </GridItemWrapper>
-          <GridItemWrapper key="spell-caster">
-            <DragHandle className="drag-handle">Spell Caster</DragHandle>
-            <GridItemContent>Spell Caster</GridItemContent>
-          </GridItemWrapper>
-          <GridItemWrapper key="summoned-skull">
-            <DragHandle className="drag-handle">Summoned Skull</DragHandle>
-            <GridItemContent>Summoned Skull</GridItemContent>
-          </GridItemWrapper>
+          {layout.map((component) => (
+            <Card key={component.i}>
+              <DragHandle className="drag-handle">פתק חשוב</DragHandle>
+              <CardHeader>
+                <CardTitle>Card Title</CardTitle>
+                <CardDescription>Card Description</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>Card Content</p>
+              </CardContent>
+              <CardFooter>
+                <p>Card Footer</p>
+              </CardFooter>
+            </Card>
+          ))}
         </GridLayout>
       </div>
     </>
