@@ -17,3 +17,17 @@ const Layout: React.FC = () => {
 
 export default Layout;
 
+/**
+ * sends:
+ *
+ * 1. x of the page
+ * 2. y of the page
+ * 3. w of the page
+ * 4. h of the page
+ * 5. the group that created the component
+ * 6. the component id
+ * 7. style of the component will be default
+ *
+ * gets the data that has been created
+ */
+
