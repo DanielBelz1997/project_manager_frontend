@@ -30,11 +30,14 @@ import { formSchema } from "@/schemas/form-schema";
 import app_logo from "@/assets/services/app_logo.png";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/auth";
+import { useState } from "react";
 
 export function Header() {
   const token = useAuthStore((state) => state.token);
   const username = useAuthStore((state) => state.username);
   const role = useAuthStore((state) => state.role);
+
+  const [isContactDialogOpen, setIsContactDialogOpen] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,12 +51,14 @@ export function Header() {
 
   const navigate = useNavigate();
 
-  const onSubmit = (/* values: z.infer<typeof formSchema> */) => {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
     toast({
       title: "תודה! נחזור אליכם בהקדם!",
     });
 
     form.reset();
+    setIsContactDialogOpen(false);
   };
 
   return (
@@ -107,7 +112,9 @@ export function Header() {
             התנתק
           </Button>
         ) : null}
-        <Dialog>
+        <Dialog
+          open={isContactDialogOpen}
+          onOpenChange={setIsContactDialogOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" className="ml-6">
               צור קשר
@@ -189,9 +196,7 @@ export function Header() {
                     />
                   </div>
                   <div className="flex justify-end ">
-                    <DialogClose>
-                      <Button type="submit">שלח</Button>
-                    </DialogClose>
+                    <Button type="submit">שלח</Button>
                   </div>
                 </form>
               </Form>
