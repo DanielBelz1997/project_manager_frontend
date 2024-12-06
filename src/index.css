@@ -262,3 +262,21 @@
   bottom: 0;
   transform: rotate(45deg);
 }
+
+#jumping-svg {
+  width: 100px;
+  height: 100px;
+  animation: jump 1s ease-in-out infinite;
+}
+
+/* Keyframes for the jump animation */
+@keyframes jump {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+

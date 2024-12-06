@@ -1,5 +1,5 @@
 import React from "react";
-import app_logo from "../../assets/services/app_logo.png";
+import header_logo from "../../../public/main_page_logo.svg";
 
 import {
   Carousel,
@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div className="w-full h-full p-40 flex justify-around items-center">
       <div className="">
-        <img className="w-48" src={app_logo} />
+        <img className="w-68" src={header_logo} />
         <span className="flex justify-center mt-5">
           כל הבקשות שלכם, במקום אחד.
         </span>

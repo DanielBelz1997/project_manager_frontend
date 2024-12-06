@@ -1,0 +1,10 @@
+5/12
+
+front : 
+
+      - separate code into components. especially in header component.
+      - see how to add the interaction with the api for contact table.
+
+backend:
+
+      - implement api for the contact modal.
