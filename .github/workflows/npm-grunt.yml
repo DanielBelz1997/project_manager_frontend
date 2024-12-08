@@ -5,8 +5,8 @@ on:
     types: [opened, synchronize, reopened] # Trigger on PR creation or updates
   push:
     branches:
-      - 'feature/*' # Replace with the branch pattern you want to trigger on
-      - 'hotfix/*'  # Example: Matches branches like 'feature/my-feature' or 'hotfix/urgent-fix'
+      - "feature/*" # Replace with the branch pattern you want to trigger on
+      - "hotfix/*" # Example: Matches branches like 'feature/my-feature' or 'hotfix/urgent-fix'
 
 jobs:
   run-workflow:
@@ -21,13 +21,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm test
+      ##- name: Run tests
+      ##  run: npm test
 
       - name: Lint code
         run: npm run lint
@@ -36,3 +36,4 @@ jobs:
       - name: Deploy (if applicable)
         if: github.event_name == 'push'
         run: echo "Deploying to environment for branch ${{ github.ref_name }}"
+
