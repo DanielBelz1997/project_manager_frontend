@@ -19,7 +19,7 @@ export const RightSideHeader = ({
       <img
         src={header_logo}
         onClick={() => navigate("/")}
-        className="w-14 cursor-pointer"
+        className="w-20 cursor-pointer"
       />
       {token ? (
         <div className="flex justify-start mt-2.5">
@@ -54,3 +54,4 @@ export const RightSideHeader = ({
     </div>
   );
 };
+

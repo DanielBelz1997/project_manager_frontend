@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/store/auth";
-import header_logo from "../../../public/header_logo.svg";
+import header_logo from "../../../public/header_logo_dark.svg";
 import { LeftSideHeader } from "@/components/header/LeftSideHeader";
 import { RightSideHeader } from "@/components/header/RightSideHeader";
 
