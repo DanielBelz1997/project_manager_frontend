@@ -6,7 +6,7 @@ import { z } from "zod";
 import { useLogin } from "@/hooks/useLogin";
 import { useAuthStore } from "@/store/auth";
 import { useNavigate } from "react-router-dom";
-import { loginSchema } from "@/schemas/login-schema";
+import { loginConfig } from "@/schemas/login-schema";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -15,7 +15,7 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
 
-  const onSubmit = (values: z.infer<typeof loginSchema.schema>) => {
+  const onSubmit = (values: z.infer<typeof loginConfig.schema>) => {
     setIsLoading(true);
 
     loginMutation.mutate(
@@ -64,10 +64,10 @@ export default function LoginPage() {
             <h1 className="text-2xl font-semibold tracking-tight">התחבר</h1>
           </div>
           <GenericForm
-            schema={loginSchema.schema}
-            defaultValues={loginSchema.defaultValues}
+            schema={loginConfig.schema}
+            defaultValues={loginConfig.defaultValues}
             onSubmit={onSubmit}
-            fields={loginSchema.fields}
+            fields={loginConfig.fields}
             className={""}
             acceptText={"התחבר"}
             isLoading={isLoading}
