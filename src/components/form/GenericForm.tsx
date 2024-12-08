@@ -20,7 +20,7 @@ import SelectForm from "../ui/select_form";
 
 // Generic form component props interface
 interface GenericFormProps<T extends ZodTypeAny> {
-  className: string;
+  className?: string;
   acceptText: string;
   schema: T; // Zod schema for validation
   defaultValues: z.infer<T>; // Default values inferred from the schema
@@ -67,6 +67,7 @@ export function GenericForm<T extends ZodTypeAny>({
                       <Textarea
                         placeholder={field.placeholder}
                         {...controllerField}
+                        
                       />
                     ) : field.type === "text" ? (
                       <Input
@@ -93,10 +94,10 @@ export function GenericForm<T extends ZodTypeAny>({
           ))}
           <div className="flex justify-center">
             <Button type="submit" disabled={isLoading}>
+              {acceptText}
               {isLoading && (
                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
               )}
-              {acceptText}
             </Button>
           </div>
         </form>

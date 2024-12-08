@@ -6,7 +6,7 @@ import { z } from "zod";
 import { useLogin } from "@/hooks/useLogin";
 import { useAuthStore } from "@/store/auth";
 import { useNavigate } from "react-router-dom";
-// import { Credentials } from "@/types/auth";
+import { loginSchema } from "@/schemas/login-schema";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -15,12 +15,7 @@ export default function LoginPage() {
 
   const navigate = useNavigate();
 
-  const contactSchema = z.object({
-    email: z.string().email("email is required"),
-    password: z.string().min(8, "make me stronger!"),
-  });
-
-  const onSubmit = (values: z.infer<typeof contactSchema>) => {
+  const onSubmit = (values: z.infer<typeof loginSchema.schema>) => {
     setIsLoading(true);
 
     loginMutation.mutate(
@@ -69,24 +64,10 @@ export default function LoginPage() {
             <h1 className="text-2xl font-semibold tracking-tight">התחבר</h1>
           </div>
           <GenericForm
-            schema={contactSchema}
-            defaultValues={{
-              email: "",
-              password: "",
-            }}
+            schema={loginSchema.schema}
+            defaultValues={loginSchema.defaultValues}
             onSubmit={onSubmit}
-            fields={[
-              {
-                name: "email",
-                label: "אימייל",
-                type: "text",
-              },
-              {
-                name: "password",
-                label: "סיסמה",
-                type: "password",
-              },
-            ]}
+            fields={loginSchema.fields}
             className={""}
             acceptText={"התחבר"}
             isLoading={isLoading}

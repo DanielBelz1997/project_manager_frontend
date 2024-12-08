@@ -13,7 +13,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
 import { TypographyP } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
-// import { TypographyP } from "@/components/ui/typography";
 
 export default function Home() {
   const [api, setApi] = React.useState<CarouselApi>();
