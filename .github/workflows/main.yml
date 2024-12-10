@@ -2,10 +2,12 @@ name: AI Code Reviewer
 
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - "feature/*" # Replace with the branch pattern you want to trigger on
+      - "hotfix/*" # Example: Matches branches like 'feature/my-feature' or 'hotfix/urgent-fix'
+
 permissions: write-all
 jobs:
   review:
@@ -21,3 +23,5 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_API_MODEL: "gpt-4" # Optional: defaults to "gpt-4"
           exclude: "**/*.json, **/*.md" # Optional: exclude patterns separated by commas
+
+
