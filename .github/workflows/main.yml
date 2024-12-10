@@ -3,15 +3,8 @@ name: AI Code Reviewer
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - "feature/*" # Replace with the branch pattern you want to trigger on
-      - "hotfix/*" # Example: Matches branches like 'feature/my-feature' or 'hotfix/urgent-fix'
-      - main
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: write-all
 
 jobs:
   review:
