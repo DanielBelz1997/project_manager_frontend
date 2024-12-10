@@ -11,7 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
-//fdsfdsfds
+//fdsfds56465465
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
