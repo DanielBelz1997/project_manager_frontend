@@ -1,4 +1,4 @@
-import { axiosInstance } from "./axiosInstance";
+import { axiosInstance } from "../axiosInstance";
 
 export const login = async (credentials: {
   email: string;
@@ -22,3 +22,4 @@ export const role = async (token: string | null) => {
   });
   return response.data;
 };
+

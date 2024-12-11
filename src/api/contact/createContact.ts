@@ -1,16 +1,15 @@
 import { z } from "zod";
 import { axiosInstance } from "../axiosInstance";
-import { formSchema } from "@/schemas/contact-schema";
+import { contactSchema } from "@/schemas/contact-schema";
 
 export const createContact = async (
-  contactValues: z.infer<typeof formSchema>
+  contactValues: z.infer<typeof contactSchema.schema>
 ) => {
   try {
-    const response = await axiosInstance.post("/contact", {
-      contactValues,
-    });
+    const response = await axiosInstance.post("/contact", contactValues);
     return response?.data;
   } catch (e) {
     console.log(e);
   }
 };
+

@@ -33,6 +33,7 @@ export const LeftSideHeader = ({ token }: { token: string | null }) => {
   });
 
   const onSubmit = (contactValues: z.infer<typeof contactSchema.schema>) => {
+    console.log(contactValues);
     setIsLoading(true);
     AddContactMutation.mutate(contactValues, {
       onSuccess: () => {
