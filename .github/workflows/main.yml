@@ -10,9 +10,6 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug Inputs
-        run: echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}"
-
       - name: Checkout Repo
         uses: actions/checkout@v3
 
