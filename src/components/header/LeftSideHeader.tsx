@@ -93,7 +93,12 @@ export const LeftSideHeader = ({ token }: { token: string | null }) => {
                 { name: "name", label: "שם", type: "text" },
                 { name: "email", label: "דואר אלקטרוני", type: "email" },
                 { name: "title", label: "כותרת", type: "text" },
-                { name: "messageBody", label: "גוף ההודעה", type: "textarea" },
+                {
+                  name: "messageBody",
+                  label: "גוף ההודעה",
+                  type: "textarea",
+                  fieldClassName: "resize-none h-40",
+                },
               ]}
               acceptText="שלח"
               isLoading={isLoading}

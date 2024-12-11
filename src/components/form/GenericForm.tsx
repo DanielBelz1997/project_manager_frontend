@@ -30,6 +30,7 @@ interface GenericFormProps<T extends ZodTypeAny> {
     label: string; // Label for the form field
     type: HTMLInputElement["type"];
     placeholder?: string;
+    fieldClassName?: string;
   }>;
   isLoading: boolean;
 }
@@ -65,9 +66,9 @@ export function GenericForm<T extends ZodTypeAny>({
                   <FormControl className="">
                     {field.type === "textarea" ? (
                       <Textarea
+                        className={field.fieldClassName}
                         placeholder={field.placeholder}
                         {...controllerField}
-                        
                       />
                     ) : field.type === "text" ? (
                       <Input
