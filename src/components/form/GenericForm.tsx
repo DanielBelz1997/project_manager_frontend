@@ -64,46 +64,62 @@ export function GenericForm<T extends ZodTypeAny>({
     return acc;
   }, {});
 
-  type FieldType = typeof fields;
+  type FieldType = Array<(typeof fields)[0]>;
 
-  const renderGroup = (groupName: string, fields: FieldType) => (
-    <div
-      key={groupName}
-      className={`grid grid-cols-${fields.length} gap-4 mb-6`}>
-      {fields.map((field, index) => (
-        <FormField
-          key={index}
-          control={form.control}
-          name={field.name as Path<TypeOf<T>>}
-          render={({ field: controllerField }) => (
-            <FormItem className="grid gap-1">
-              <FormLabel>{field.label}</FormLabel>
-              <FormControl>
-                {field.type === "textarea" ? (
-                  <Textarea
-                    className={field.fieldClassName}
-                    placeholder={field.placeholder}
-                    {...controllerField}
-                  />
-                ) : field.type === "file" ? (
-                  <AvatarUpload />
-                ) : field.type === "select" ? (
-                  <SelectForm />
-                ) : (
-                  <Input
-                    placeholder={field.placeholder}
-                    type={field.type}
-                    {...controllerField}
-                  />
-                )}
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      ))}
-    </div>
-  );
+  console.log(groupedFields);
+
+  const getGridClass = (length: number) => {
+    if (length <= 1) return "grid-cols-1";
+    if (length <= 2) return "grid-cols-2";
+    if (length <= 3) return "grid-cols-3";
+    if (length <= 4) return "grid-cols-4";
+    if (length <= 5) return "grid-cols-5";
+    if (length <= 6) return "grid-cols-6";
+    if (length <= 7) return "grid-cols-7";
+    if (length <= 8) return "grid-cols-8";
+    return "grid-cols-9"; // Use up to 9 columns
+  };
+
+  const renderGroup = (groupName: string, fields: FieldType) => {
+    const gridClass = getGridClass(fields.length);
+
+    return (
+      <div key={groupName} className={`grid ${gridClass} gap-4 mb-6`}>
+        {fields.map((field, index) => (
+          <FormField
+            key={index}
+            control={form.control}
+            name={field.name as Path<TypeOf<T>>}
+            render={({ field: controllerField }) => (
+              <FormItem className="grid gap-1">
+                <FormLabel>{field.label}</FormLabel>
+                <FormControl>
+                  {field.type === "textarea" ? (
+                    <Textarea
+                      className={field.fieldClassName}
+                      placeholder={field.placeholder}
+                      {...controllerField}
+                    />
+                  ) : field.type === "file" ? (
+                    <AvatarUpload />
+                  ) : field.type === "select" ? (
+                    <SelectForm />
+                  ) : (
+                    <Input
+                      placeholder={field.placeholder}
+                      type={field.type}
+                      {...controllerField}
+                    />
+                  )}
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <Form {...form}>

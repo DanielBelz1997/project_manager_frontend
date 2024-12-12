@@ -4,6 +4,8 @@ type Field<TSchema extends ZodType> = {
   name: keyof z.infer<TSchema>;
   label: string;
   type: string;
+  group?: string;
+  fieldClassName?: string;
 };
 
 export type LoginSchema<TSchema extends ZodType> = {
