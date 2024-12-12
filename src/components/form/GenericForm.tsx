@@ -66,8 +66,6 @@ export function GenericForm<T extends ZodTypeAny>({
 
   type FieldType = Array<(typeof fields)[0]>;
 
-  console.log(groupedFields);
-
   const getGridClass = (length: number) => {
     if (length <= 1) return "grid-cols-1";
     if (length <= 2) return "grid-cols-2";
