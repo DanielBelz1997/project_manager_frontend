@@ -90,8 +90,13 @@ export const LeftSideHeader = ({ token }: { token: string | null }) => {
               defaultValues={contactSchema.defaultValues}
               onSubmit={onSubmit}
               fields={[
-                { name: "name", label: "שם", type: "text" },
-                { name: "email", label: "דואר אלקטרוני", type: "email" },
+                { name: "name", label: "שם", type: "text", group: "d" },
+                {
+                  name: "email",
+                  label: "דואר אלקטרוני",
+                  type: "email",
+                  group: "d",
+                },
                 { name: "title", label: "כותרת", type: "text" },
                 {
                   name: "messageBody",

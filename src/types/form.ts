@@ -11,3 +11,4 @@ export type LoginSchema<TSchema extends ZodType> = {
   defaultValues: z.infer<TSchema>;
   fields: Field<TSchema>[];
 };
+

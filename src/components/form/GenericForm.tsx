@@ -31,11 +31,11 @@ interface GenericFormProps<T extends ZodTypeAny> {
     type: HTMLInputElement["type"];
     placeholder?: string;
     fieldClassName?: string;
+    group?: string;
   }>;
   isLoading: boolean;
 }
 
-// Generic form component
 export function GenericForm<T extends ZodTypeAny>({
   className,
   acceptText = "שלח",
@@ -51,48 +51,71 @@ export function GenericForm<T extends ZodTypeAny>({
     defaultValues,
   });
 
+  const groupedFields = fields.reduce<
+    Record<string, Array<(typeof fields)[0]>>
+  >((acc, field) => {
+    if (field.group) {
+      acc[field.group] = acc[field.group] || [];
+      acc[field.group].push(field);
+    } else {
+      acc.__ungrouped = acc.__ungrouped || [];
+      acc.__ungrouped.push(field);
+    }
+    return acc;
+  }, {});
+
+  type FieldType = typeof fields;
+
+  const renderGroup = (groupName: string, fields: FieldType) => (
+    <div
+      key={groupName}
+      className={`grid grid-cols-${fields.length} gap-4 mb-6`}>
+      {fields.map((field, index) => (
+        <FormField
+          key={index}
+          control={form.control}
+          name={field.name as Path<TypeOf<T>>}
+          render={({ field: controllerField }) => (
+            <FormItem className="grid gap-1">
+              <FormLabel>{field.label}</FormLabel>
+              <FormControl>
+                {field.type === "textarea" ? (
+                  <Textarea
+                    className={field.fieldClassName}
+                    placeholder={field.placeholder}
+                    {...controllerField}
+                  />
+                ) : field.type === "file" ? (
+                  <AvatarUpload />
+                ) : field.type === "select" ? (
+                  <SelectForm />
+                ) : (
+                  <Input
+                    placeholder={field.placeholder}
+                    type={field.type}
+                    {...controllerField}
+                  />
+                )}
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      ))}
+    </div>
+  );
+
   return (
     <Form {...form}>
       <div className={cn("grid gap-6", className)} {...props}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          {fields.map((field, index) => (
-            <FormField
-              key={index}
-              control={form.control}
-              name={field.name as Path<TypeOf<T>>}
-              render={({ field: controllerField }) => (
-                <FormItem className="grid gap-1 mb-5 ml-1 mr-1">
-                  <FormLabel>{field.label}</FormLabel>
-                  <FormControl className="">
-                    {field.type === "textarea" ? (
-                      <Textarea
-                        className={field.fieldClassName}
-                        placeholder={field.placeholder}
-                        {...controllerField}
-                      />
-                    ) : field.type === "text" ? (
-                      <Input
-                        placeholder={field.placeholder}
-                        type={field.type}
-                        {...controllerField}
-                      />
-                    ) : field.type === "file" ? (
-                      <AvatarUpload />
-                    ) : field.type === "select" ? (
-                      <SelectForm />
-                    ) : (
-                      <Input
-                        placeholder={field.placeholder}
-                        type={field.type}
-                        {...controllerField}
-                      />
-                    )}
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
+          {Object.entries(groupedFields).map(([groupName, groupFields]) =>
+            groupName === "__ungrouped"
+              ? groupFields.map((field, index) =>
+                  renderGroup(`ungrouped-${index}`, [field])
+                )
+              : renderGroup(groupName, groupFields)
+          )}
           <div className="flex justify-center">
             <Button type="submit" disabled={isLoading}>
               {acceptText}

@@ -9,7 +9,8 @@ export const createContact = async (
     const response = await axiosInstance.post("/contact", contactValues);
     return response?.data;
   } catch (e) {
-    console.log(e);
+    console.error("Error Creating Contact: ", e);
+    throw new Error(`Failed to create contact. message: ${e}`);
   }
 };
 
