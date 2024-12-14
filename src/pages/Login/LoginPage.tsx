@@ -12,8 +12,9 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const loginMutation = useLogin();
-  //dsa
   const navigate = useNavigate();
+
+  const { setRole, setUsername, setToken } = useAuthStore();
 
   const onSubmit = (values: z.infer<typeof loginConfig.schema>) => {
     setIsLoading(true);
@@ -23,15 +24,13 @@ export default function LoginPage() {
       {
         onSuccess: (data) => {
           console.log(data);
-          if (data?.access_token !== undefined) {
-            useAuthStore.getState().setToken(data.access_token);
-            useAuthStore.getState().setUsername(data.username);
-            useAuthStore.getState().setRole(data.role);
-            if (data.role === 1) {
-              navigate("/admin");
-            } else {
-              navigate("/");
-            }
+          if (data?.access_token) {
+            setToken(data.access_token);
+            setUsername(data.username);
+            setRole(data.role);
+
+            navigate(data.role === 1 ? "/admin" : "/");
+
             toast({
               title: "התגעגענו!",
               description: "עכשיו תוכל לבצע פעולות במערכת",

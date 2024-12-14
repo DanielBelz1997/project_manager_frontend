@@ -10,12 +10,13 @@ export type Credentials = {
 };
 
 export type AuthState = {
-  clearLogin(): unknown;
   username: string | null;
   token: string | null;
   role: string | null;
+  initializeSession: () => Promise<void>;
   setRole: (role: string) => void;
   setUsername: (username: string) => void;
   setToken: (token: string) => void;
+  clearLogin: () => void;
 };
 

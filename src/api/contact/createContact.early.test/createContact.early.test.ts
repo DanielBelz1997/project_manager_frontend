@@ -1,5 +1,8 @@
 // Unit tests for: createContact
 
+import { axiosInstance } from "@/api/axiosInstance";
+import { createContact } from "../createContact";
+
 // Mocking axiosInstance
 jest.mock("../../axiosInstance", () => ({
   axiosInstance: {
@@ -14,7 +17,7 @@ class MockSchema {
   };
 }
 
-const MockcontactSchema = new MockSchema() as any;
+const MockcontactSchema = new MockSchema();
 
 describe("createContact() createContact method", () => {
   beforeEach(() => {
@@ -25,12 +28,14 @@ describe("createContact() createContact method", () => {
   it("should successfully create a contact with valid data", async () => {
     // Arrange
     const mockContactData = {
-      name: "John Doe",
-      email: "john@example.com",
-    } as any;
+      name: "name",
+      email: "email@gmail.com",
+      title: "string",
+      messageBody: "string",
+    };
     (axiosInstance.post as jest.Mock).mockResolvedValue({
       data: { id: 1, ...mockContactData },
-    } as any as never);
+    });
 
     // Act
     const result = await createContact(mockContactData);
@@ -47,9 +52,11 @@ describe("createContact() createContact method", () => {
   it("should throw an error when axiosInstance.post fails", async () => {
     // Arrange
     const mockContactData = {
-      name: "Jane Doe",
-      email: "jane@example.com",
-    } as any;
+      name: "name",
+      email: "email@gmail.com",
+      title: "string",
+      messageBody: "string",
+    };
     const errorMessage = "Network Error";
     (axiosInstance.post as jest.Mock).mockRejectedValue(
       new Error(errorMessage) as never
@@ -66,7 +73,7 @@ describe("createContact() createContact method", () => {
     const mockContactData = {} as any;
     (axiosInstance.post as jest.Mock).mockResolvedValue({
       data: { id: 2, ...mockContactData },
-    } as any as never);
+    });
 
     // Act
     const result = await createContact(mockContactData);
