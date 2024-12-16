@@ -1,4 +1,4 @@
-import { LoginSchema } from "@/types/form";
+import { CostumeSchemaType } from "@/types/form";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -6,7 +6,7 @@ const loginSchema = z.object({
   password: z.string().min(8, "make me stronger!"),
 });
 
-export const loginConfig: LoginSchema<typeof loginSchema> = {
+export const loginConfig: CostumeSchemaType<typeof loginSchema> = {
   schema: loginSchema,
   defaultValues: {
     email: "",
@@ -25,3 +25,4 @@ export const loginConfig: LoginSchema<typeof loginSchema> = {
     },
   ],
 };
+

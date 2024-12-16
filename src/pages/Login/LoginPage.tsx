@@ -15,8 +15,9 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   const { setRole, setUsername, setToken } = useAuthStore();
+  const { defaultValues, fields, schema } = loginConfig;
 
-  const onSubmit = (values: z.infer<typeof loginConfig.schema>) => {
+  const onSubmit = (values: z.infer<typeof schema>) => {
     setIsLoading(true);
 
     loginMutation.mutate(
@@ -63,10 +64,10 @@ export default function LoginPage() {
             <h1 className="text-2xl font-semibold tracking-tight">התחבר</h1>
           </div>
           <GenericForm
-            schema={loginConfig.schema}
-            defaultValues={loginConfig.defaultValues}
+            schema={schema}
+            defaultValues={defaultValues}
             onSubmit={onSubmit}
-            fields={loginConfig.fields}
+            fields={fields}
             className={""}
             acceptText={"התחבר"}
             isLoading={isLoading}
