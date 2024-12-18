@@ -16,6 +16,8 @@ export const HomeCarousel = () => {
   const [current, setCurrent] = React.useState(0);
   const [count, setCount] = React.useState(0);
 
+  const mainCaruselText = "מספקי השירותים שלכם";
+
   React.useEffect(() => {
     if (!api) {
       return;
@@ -30,7 +32,10 @@ export const HomeCarousel = () => {
   }, [api]);
 
   return (
-    <div className="flex w-full h-[100vh] justify-center items-center flex-col pt-80 px-96">
+    <div className="flex w-full h-[100vh] justify-center items-center flex-col pt-0 px-96">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mt-20">
+        {mainCaruselText}
+      </h1>
       <Carousel
         plugins={[
           Autoplay({
@@ -43,6 +48,7 @@ export const HomeCarousel = () => {
           direction: "rtl",
           duration: 100,
         }}
+        className="mt-20"
         setApi={setApi}>
         <CarouselContent className="flex w-full">
           {Array.from({ length: 5 }).map((_, index) => (
@@ -73,3 +79,4 @@ export const HomeCarousel = () => {
     </div>
   );
 };
+
