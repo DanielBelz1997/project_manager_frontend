@@ -53,7 +53,10 @@ export const HomeCarousel = () => {
         <CarouselContent className="flex w-full">
           {Array.from({ length: 5 }).map((_, index) => (
             <CarouselItem key={index} className={`md:basis-1/2 lg:basis-1/3`}>
-              <Card className={`${index !== current - 1 && "mt-5"}`}>
+              <Card
+                className={`transition-all ${
+                  index !== current - 1 && "mt-5 "
+                }`}>
                 <CardContent
                   className={`flex flex-col items-center justify-center p-8 ${
                     index !== current - 1 && "opacity-20"
