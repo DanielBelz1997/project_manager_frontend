@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 const Layout: React.FC = () => {
   return (
-    <div className="h-[87vh] w-[100vw]">
+    <div className="">
       <Header />
       <Separator />
       <Outlet />
