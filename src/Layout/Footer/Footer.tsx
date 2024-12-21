@@ -4,12 +4,10 @@ import { useLocation } from "react-router-dom";
 export function Footer() {
   const location = useLocation();
   return location.pathname !== "/admin" ? (
-    <>
+    <footer className="text-center">
       <Separator />
-      <footer className="w-full flex justify-center items-center">
-        &copy; כל הזכויות שמורות
-      </footer>
-    </>
+      <p>&copy; כל הזכויות שמורות</p>
+    </footer>
   ) : (
     <></>
   );

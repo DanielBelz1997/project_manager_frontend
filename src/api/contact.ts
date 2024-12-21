@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { axiosInstance } from "../axiosInstance";
+import { axiosInstance } from "./axiosInstance";
 import { contactSchema } from "@/schemas/contact-schema";
 
 export const createContact = async (

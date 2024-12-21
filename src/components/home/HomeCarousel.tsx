@@ -1,39 +1,45 @@
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
-  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "../ui/carousel";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent, CardImage } from "../ui/card";
 import { Button } from "../ui/button";
-import React from "react";
+import { useCarousel } from "@/hooks/useCarousel";
+import { useGroups } from "@/hooks/api-hooks/useGroup";
+
+type Group<T> = {
+  description: string;
+  form: T[];
+  id: number;
+  image_url: string;
+  name: string;
+};
 
 export const HomeCarousel = () => {
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
+  const { data, isLoading, isError } = useGroups();
+  const { setApi, count, current } = useCarousel({
+    initialCountValue: data?.data.length ? data?.data.length : 0,
+  });
+
+  console.log(current);
 
   const mainCaruselText = "מספקי השירותים שלכם";
 
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
+  if (isLoading) {
+    return <>wait...</>;
+  }
 
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
+  if (isError) {
+    return <>error</>;
+  }
 
   return (
-    <div className="flex w-full h-[100vh] justify-center items-center flex-col pt-0 px-96">
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mt-20">
+    <div className="flex w-full h-[90vh] justify-center items-center flex-col pt-0 px-96">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl mb-[100vh] absolute">
         {mainCaruselText}
       </h1>
       <Carousel
@@ -44,29 +50,25 @@ export const HomeCarousel = () => {
         ]}
         opts={{
           align: "center",
-          loop: true,
           direction: "rtl",
+          loop: true,
           duration: 100,
         }}
-        className="mt-20"
+        className=""
         setApi={setApi}>
-        <CarouselContent className="flex w-full">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index} className={`md:basis-1/2 lg:basis-1/3`}>
+        <CarouselContent>
+          {data?.data.map((group: Group<object>, index: number) => (
+            <CarouselItem key={group.id} className="md:basis-1/2 lg:basis-1/2">
               <Card
                 className={`transition-all ${
                   index !== current - 1 && "mt-5 "
                 }`}>
                 <CardContent
-                  className={`flex flex-col items-center justify-center p-8 ${
+                  className={`flex flex-col items-center justify-center p-8  ${
                     index !== current - 1 && "opacity-20"
                   }`}>
-                  <p className="text-center">
-                    אנחנו צוות שיוצר תוכן, כל פעם יהיה כאן משהו אחר. אני מאוד
-                    אוהב את אנחנו צוות שיוצר תוכן, כל פעם יהיה כאן משהו אחר. אני
-                    מאוד אוהב את אנחנו צוות שיוצר תוכן, כל פעם יהיה כאן משהו
-                    אחר. אני מאוד אוהב את התוכן כאן
-                  </p>
+                  <CardImage src={group.image_url} />
+                  <p className="text-center mt-5">{group.description}</p>
                   <Button className="mt-5">בקשה חדשה</Button>
                 </CardContent>
               </Card>
@@ -76,7 +78,7 @@ export const HomeCarousel = () => {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <div className="py-2 text-center text-sm text-muted-foreground">
+      <div className="py-2 text-center text-sm text-muted-foreground absolute mt-[80vh]">
         {current} מתוך {count}
       </div>
     </div>
