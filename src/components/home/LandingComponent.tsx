@@ -9,7 +9,7 @@ export const LandingComponent = () => {
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
         {mainText}
       </h1>
-      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight whitespace-pre-line mt-5 text-center">
+      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight whitespace-pre-line mt-5 mb-40 text-center">
         {subText}
       </h3>
     </>

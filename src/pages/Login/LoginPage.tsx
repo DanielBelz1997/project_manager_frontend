@@ -3,19 +3,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { z } from "zod";
-import { useLogin } from "@/hooks/useLogin";
+import { useLogin } from "@/hooks/api-hooks/useLogin";
 import { useAuthStore } from "@/store/auth";
 import { useNavigate } from "react-router-dom";
 import { loginConfig } from "@/schemas/login-schema";
 
 export default function LoginPage() {
+  const { defaultValues, fields, schema } = loginConfig;
+
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const loginMutation = useLogin();
   const navigate = useNavigate();
-
+  const loginMutation = useLogin();
   const { setRole, setUsername, setToken } = useAuthStore();
-  const { defaultValues, fields, schema } = loginConfig;
 
   const onSubmit = (values: z.infer<typeof schema>) => {
     setIsLoading(true);
@@ -52,12 +52,10 @@ export default function LoginPage() {
         },
       }
     );
-
-    setTimeout(() => {}, 3000);
   };
 
   return (
-    <div className="min-h-full flex justify-center items-center">
+    <div className="flex w-full h-[87vh] flex-col justify-center items-center">
       <div className="lg:p-8 flex justify-center">
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col space-y-2 text-center">

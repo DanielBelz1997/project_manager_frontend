@@ -18,7 +18,7 @@ import { contactSchema } from "@/schemas/contact-schema";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/hooks/use-toast";
-import { useCreateContact } from "@/hooks/contact/useCreateContact";
+import { useCreateContact } from "@/hooks/api-hooks/useContact";
 import { GenericForm } from "../form/GenericForm";
 
 export const LeftSideHeader = ({ token }: { token: string | null }) => {
